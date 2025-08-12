@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 
 interface AnimatedCounterProps {
   value: number;
@@ -11,21 +10,23 @@ interface AnimatedCounterProps {
   className?: string;
 }
 
-export default function AnimatedCounter({ 
-  value, 
-  suffix = "", 
-  duration = 2, 
-  className = "" 
+export default function AnimatedCounter({
+  value,
+  suffix = "",
+  duration = 2,
+  className = ""
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  // Updated: threshold → amount for Framer Motion v11
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   useEffect(() => {
     if (isInView) {
       const increment = value / (duration * 60); // Assuming 60fps
       let current = 0;
-      
+
       const timer = setInterval(() => {
         current += increment;
         if (current >= value) {
@@ -48,7 +49,8 @@ export default function AnimatedCounter({
       transition={{ duration: 0.5 }}
       className={className}
     >
-      {count}{suffix}
+      {count}
+      {suffix}
     </motion.div>
   );
 }
