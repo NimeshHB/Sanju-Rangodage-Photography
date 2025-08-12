@@ -1,14 +1,9 @@
-/** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
+  output: 'export',
+  basePath: '/Sanju-Rangodage-Photography',
+  assetPrefix: isProd ? '/Sanju-Rangodage-Photography/' : '',
 }
 
 export default nextConfig
